@@ -1,15 +1,32 @@
 const client = require("./client")
 
 // creates a new player
-async function createPlayer(character, server, gearsetId) {
+async function createPlayer(character, server, gearsetId, job) {
     try {
         const { rows: [player] } = await client.query(`
-            INSERT INTO players(character, server, "gearsetId")
-            VALUES ($1, $2, $3)
+            INSERT INTO players(character, server, "gearsetId", job)
+            VALUES ($1, $2, $3, $4)
             ON CONFLICT (character) DO NOTHING
             RETURNING *;
-        `, [character, server, gearsetId]);
+        `, [character, server, gearsetId, job]);
 
+        return player;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+// attaches bis gearset to player object
+async function attachGearsetToPlayer(player) {
+    try {
+        const { gearsetId } = player;
+        const { rows: [gearset] } = await client.query(`
+            SELECT *
+            FROM gearsets
+            WHERE id=$1;
+        `, [gearsetId]);
+
+        player.bisGear = gearset;
         return player;
     } catch (error) {
         console.error(error);
@@ -25,7 +42,8 @@ async function getPlayerByCharacter(character) {
             WHERE character=$1;
         `, [character]);
 
-        return player;
+        const playerWithBIS = await attachGearsetToPlayer(player)
+        return playerWithBIS;
     } catch (error) {
         console.error(error);
     }
@@ -40,7 +58,8 @@ async function getPlayerById(playerId) {
             WHERE id=$1;
         `, [playerId]);
 
-        return player;
+        const playerWithBIS = await attachGearsetToPlayer(player)
+        return playerWithBIS;
     } catch (error) {
         console.error(error);
     }
@@ -60,7 +79,8 @@ async function updatePlayer(playerId, { ...fields }) {
             RETURNING *;
         `, Object.values(fields));
 
-        return player;
+        const playerWithBIS = await attachGearsetToPlayer(player)
+        return playerWithBIS;
     } catch (error) {
         console.error(error);
     }
@@ -91,7 +111,10 @@ async function getPlayersByStatic(staticId) {
             WHERE static_players."staticId"=$1;
         `, [staticId]);
 
-        return rows;
+        console.log(rows);
+        const playersWithBIS = await Promise.all(rows.map(attachGearsetToPlayer))
+        console.log(playersWithBIS)
+        return playersWithBIS;
     } catch (error) {
         console.error(error);
     }

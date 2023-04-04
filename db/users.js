@@ -41,7 +41,7 @@ async function verifyUser(username, password) {
         const user = await getUserByUsername(username);
         const hashedPassword = user.password;
 
-        let passwordsMatch = await bcrypt.compare(password, bcrypt.hashedPassword)
+        let passwordsMatch = await bcrypt.compare(password, hashedPassword)
         if (passwordsMatch) {
             delete user.password;
             return user;

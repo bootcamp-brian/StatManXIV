@@ -63,9 +63,9 @@ async function createTables() {
                 hands VARCHAR(255) NOT NULL,
                 legs VARCHAR(255) NOT NULL,
                 feet VARCHAR(255) NOT NULL,
-                earring VARCHAR(255) NOT NULL,
+                earrings VARCHAR(255) NOT NULL,
                 necklace VARCHAR(255) NOT NULL,
-                bracelet VARCHAR(255) NOT NULL,
+                bracelets VARCHAR(255) NOT NULL,
                 ring1 VARCHAR(255) NOT NULL,
                 ring2 VARCHAR(255) NOT NULL,
                 url VARCHAR(255)
@@ -75,6 +75,7 @@ async function createTables() {
             CREATE TABLE players (
                 id SERIAL PRIMARY KEY,
                 character VARCHAR(255) UNIQUE NOT NULL,
+                job VARCHAR(255) NOT NULL,
                 server VARCHAR(255) NOT NULL,
                 "gearsetId" INTEGER REFERENCES gearsets(id) NOT NULL,
                 mainhand BOOLEAN DEFAULT false,
@@ -84,9 +85,9 @@ async function createTables() {
                 hands BOOLEAN DEFAULT false,
                 legs BOOLEAN DEFAULT false,
                 feet BOOLEAN DEFAULT false,
-                earring BOOLEAN DEFAULT false,
+                earrings BOOLEAN DEFAULT false,
                 necklace BOOLEAN DEFAULT false,
-                bracelet BOOLEAN DEFAULT false,
+                bracelets BOOLEAN DEFAULT false,
                 ring1 BOOLEAN DEFAULT false,
                 ring2 BOOLEAN DEFAULT false 
             );
@@ -175,9 +176,9 @@ async function createGearsets() {
             hands: "Augmented Lunar Envoy's Gloves of Fending",
             legs: "Augmented Lunar Envoy's Trousers of Fending",
             feet: "Abyssos Sollerets of Fending",
-            earring: "Abyssos Earrings of Fending",
+            earrings: "Abyssos Earrings of Fending",
             necklace: "Augmented Lunar Envoy's Necklace of Fending",
-            bracelet: "Abyssos Amulet of Fending",
+            bracelets: "Abyssos Amulet of Fending",
             ring1: "Augmented Lunar Envoy's Ring of Fending",
             ring2: "Abyssos Ring of Fending",
             url: null
@@ -193,9 +194,9 @@ async function createGearsets() {
             hands: "Augmented Lunar Envoy's Gloves of Striking",
             legs: "Abyssos Brais of Striking",
             feet: "Abyssos Boots of Striking",
-            earring: "Augmented Lunar Envoy's Earring of Slaying",
+            earrings: "Augmented Lunar Envoy's Earring of Slaying",
             necklace: "Augmented Lunar Envoy's Necklace of Slaying",
-            bracelet: "Augmented Lunar Envoy's Bracelets of Slaying",
+            bracelets: "Augmented Lunar Envoy's Bracelets of Slaying",
             ring1: "Augmented Lunar Envoy's Ring of Slaying",
             ring2: "Abyssos Ring of Slaying",
             url: null
@@ -211,9 +212,9 @@ async function createGearsets() {
             hands: "Augmented Lunar Envoy's Gloves of Fending",
             legs: "Augmented Lunar Envoy's Trousers of Fending",
             feet: "Abyssos Sollerets of Fending",
-            earring: "Abyssos Earrings of Fending",
+            earrings: "Abyssos Earrings of Fending",
             necklace: "Augmented Lunar Envoy's Necklace of Fending",
-            bracelet: "Abyssos Amulet of Fending",
+            bracelets: "Abyssos Amulet of Fending",
             ring1: "Augmented Lunar Envoy's Ring of Fending",
             ring2: "Abyssos Ring of Fending",
             url: null
@@ -229,9 +230,9 @@ async function createGearsets() {
             hands: "Augmented Lunar Envoy's Fingerless Gloves of Maiming",
             legs: "Augmented Lunar Envoy's Trousers of Maiming",
             feet: "Abyssos Sollerets of Maiming",
-            earring: "Augmented Lunar Envoy's Earring of Slaying",
+            earrings: "Augmented Lunar Envoy's Earring of Slaying",
             necklace: "Augmented Lunar Envoy's Necklace of Slaying",
-            bracelet: "Abyssos Amulet of Slaying",
+            bracelets: "Abyssos Amulet of Slaying",
             ring1: "Augmented Lunar Envoy's Ring of Slaying",
             ring2: "Abyssos Ring of Slaying",
             url: null
@@ -247,9 +248,9 @@ async function createGearsets() {
             hands: "Augmented Lunar Envoy's Fingerless Gloves of Aiming",
             legs: "Augmented Lunar Envoy's Trousers of Aiming",
             feet: "Abyssos Thighboots of Aiming",
-            earring: "Abyssos Earrings of Aiming",
+            earrings: "Abyssos Earrings of Aiming",
             necklace: "Abyssos Choker of Aiming",
-            bracelet: "Augmented Lunar Envoy's Bracelets of Aiming",
+            bracelets: "Augmented Lunar Envoy's Bracelets of Aiming",
             ring1: "Augmented Lunar Envoy's Ring of Aiming",
             ring2: "Abyssos Ring of Aiming",
             url: null
@@ -265,9 +266,9 @@ async function createGearsets() {
             hands: "Augmented Lunar Envoy's Gloves of Healing",
             legs: "Augmented Lunar Envoy's Longkilt of Healing",
             feet: "Abyssos Boots of Healing",
-            earring: "Abyssos Earrings of Healing",
+            earrings: "Abyssos Earrings of Healing",
             necklace: "Augmented Lunar Envoy's Necklace of Healing",
-            bracelet: "Augmented Lunar Envoy's Bracelets of Healing",
+            bracelets: "Augmented Lunar Envoy's Bracelets of Healing",
             ring1: "Abyssos Ring of Healing",
             ring2: "Rinascita Ring of Healing",
             url: null
@@ -283,9 +284,9 @@ async function createGearsets() {
             hands: "Augmented Lunar Envoy's Gloves of Casting",
             legs: "Abyssos Culottes of Casting",
             feet: "Abyssos Boots of Casting",
-            earring: "Augmented Lunar Envoy's Earring of Casting",
+            earrings: "Augmented Lunar Envoy's Earring of Casting",
             necklace: "Abyssos Choker of Casting",
-            bracelet: "Augmented Lunar Envoy's Bracelets of Casting",
+            bracelets: "Augmented Lunar Envoy's Bracelets of Casting",
             ring1: "Augmented Lunar Envoy's Ring of Casting",
             ring2: "Abyssos Ring of Casting",
             url: null
@@ -301,9 +302,9 @@ async function createGearsets() {
             hands: "Abyssos Armguards of Casting",
             legs: "Augmented Lunar Envoy's Longkilt of Casting",
             feet: "Augmented Lunar Envoy's Boots of Casting",
-            earring: "Abyssos Earrings of Casting",
+            earrings: "Abyssos Earrings of Casting",
             necklace: "Augmented Lunar Envoy's Necklace of Casting",
-            bracelet: "Abyssos Amulet of Casting",
+            bracelets: "Abyssos Amulet of Casting",
             ring1: "Augmented Lunar Envoy's Ring of Casting",
             ring2: "Abyssos Ring of Casting",
             url: null
@@ -319,9 +320,9 @@ async function createGearsets() {
             hands: "Augmented Lunar Envoy's Gloves of Healing",
             legs: "Augmented Lunar Envoy's Longkilt of Healing",
             feet: "Abyssos Boots of Healing",
-            earring: "Abyssos Earrings of Healing",
+            earrings: "Abyssos Earrings of Healing",
             necklace: "Augmented Lunar Envoy's Necklace of Healing",
-            bracelet: "Augmented Lunar Envoy's Bracelets of Healing",
+            bracelets: "Augmented Lunar Envoy's Bracelets of Healing",
             ring1: "Abyssos Ring of Healing",
             ring2: "Rinascita Ring of Healing",
             url: null
@@ -337,9 +338,9 @@ async function createGearsets() {
             hands: "Abyssos Gloves of Scouting",
             legs: "Augmented Lunar Envoy's Trousers of Scouting",
             feet: "Abyssos Thighboots of Scouting",
-            earring: "Abyssos Earrings of Aiming",
+            earrings: "Abyssos Earrings of Aiming",
             necklace: "Abyssos Choker of Aiming",
-            bracelet: "Augmented Lunar Envoy's Bracelets of Aiming",
+            bracelets: "Augmented Lunar Envoy's Bracelets of Aiming",
             ring1: "Lunar Envoy's Ring of Aiming",
             ring2: "Augmented Lunar Envoy's Ring of Aiming",
             url: null
@@ -355,9 +356,9 @@ async function createGearsets() {
             hands: "Augmented Lunar Envoy's Fingerless Gloves of Aiming",
             legs: "Augmented Lunar Envoy's Trousers of Aiming",
             feet: "Abyssos Thighboots of Aiming",
-            earring: "Abyssos Earrings of Aiming",
+            earrings: "Abyssos Earrings of Aiming",
             necklace: "Abyssos Choker of Aiming",
-            bracelet: "Augmented Lunar Envoy's Bracelets of Aiming",
+            bracelets: "Augmented Lunar Envoy's Bracelets of Aiming",
             ring1: "Augmented Lunar Envoy's Ring of Aiming",
             ring2: "Abyssos Ring of Aiming",
             url: null
@@ -373,9 +374,9 @@ async function createGearsets() {
             hands: "Augmented Lunar Envoy's Gloves of Fending",
             legs: "Augmented Lunar Envoy's Trousers of Fending",
             feet: "Abyssos Sollerets of Fending",
-            earring: "Abyssos Earrings of Fending",
+            earrings: "Abyssos Earrings of Fending",
             necklace: "Augmented Lunar Envoy's Necklace of Fending",
-            bracelet: "Abyssos Amulet of Fending",
+            bracelets: "Abyssos Amulet of Fending",
             ring1: "Augmented Lunar Envoy's Ring of Fending",
             ring2: "Abyssos Ring of Fending",
             url: null
@@ -391,9 +392,9 @@ async function createGearsets() {
             hands: "Augmented Lunar Envoy's Gloves of Healing",
             legs: "Augmented Lunar Envoy's Longkilt of Healing",
             feet: "Abyssos Boots of Healing",
-            earring: "Abyssos Earrings of Healing",
+            earrings: "Abyssos Earrings of Healing",
             necklace: "Augmented Lunar Envoy's Necklace of Healing",
-            bracelet: "Augmented Lunar Envoy's Bracelets of Healing",
+            bracelets: "Augmented Lunar Envoy's Bracelets of Healing",
             ring1: "Abyssos Ring of Healing",
             ring2: "Rinascita Ring of Healing",
             url: null
@@ -409,9 +410,9 @@ async function createGearsets() {
             hands: "Augmented Lunar Envoy's Gloves of Striking",
             legs: "Abyssos Brais of Striking",
             feet: "Abyssos Boots of Striking",
-            earring: "Augmented Lunar Envoy's Earring of Slaying",
+            earrings: "Augmented Lunar Envoy's Earring of Slaying",
             necklace: "Augmented Lunar Envoy's Necklace of Slaying",
-            bracelet: "Abyssos Amulet of Slaying",
+            bracelets: "Abyssos Amulet of Slaying",
             ring1: "Augmented Lunar Envoy's Ring of Slaying",
             ring2: "Abyssos Ring of Slaying",
             url: null
@@ -427,9 +428,9 @@ async function createGearsets() {
             hands: "Abyssos Armguards of Casting",
             legs: "Augmented Lunar Envoy's Longkilt of Casting",
             feet: "Augmented Lunar Envoy's Boots of Casting",
-            earring: "Abyssos Earrings of Casting",
+            earrings: "Abyssos Earrings of Casting",
             necklace: "Augmented Lunar Envoy's Necklace of Casting",
-            bracelet: "Abyssos Amulet of Casting",
+            bracelets: "Abyssos Amulet of Casting",
             ring1: "Augmented Lunar Envoy's Ring of Casting",
             ring2: "Abyssos Ring of Casting",
             url: null
@@ -445,9 +446,9 @@ async function createGearsets() {
             hands: "Augmented Lunar Envoy's Gloves of Fending",
             legs: "Augmented Lunar Envoy's Trousers of Fending",
             feet: "Abyssos Sollerets of Fending",
-            earring: "Abyssos Earrings of Fending",
+            earrings: "Abyssos Earrings of Fending",
             necklace: "Augmented Lunar Envoy's Necklace of Fending",
-            bracelet: "Abyssos Amulet of Fending",
+            bracelets: "Abyssos Amulet of Fending",
             ring1: "Augmented Lunar Envoy's Ring of Fending",
             ring2: "Abyssos Ring of Fending",
             url: null
@@ -463,9 +464,9 @@ async function createGearsets() {
             hands: "Augmented Lunar Envoy's Fingerless Gloves of Aiming",
             legs: "Augmented Lunar Envoy's Trousers of Aiming",
             feet: "Abyssos Thighboots of Aiming",
-            earring: "Abyssos Earrings of Aiming",
+            earrings: "Abyssos Earrings of Aiming",
             necklace: "Abyssos Choker of Aiming",
-            bracelet: "Augmented Lunar Envoy's Bracelets of Aiming",
+            bracelets: "Augmented Lunar Envoy's Bracelets of Aiming",
             ring1: "Augmented Lunar Envoy's Ring of Aiming",
             ring2: "Abyssos Ring of Aiming",
             url: null
@@ -481,9 +482,9 @@ async function createGearsets() {
             hands: "Augmented Lunar Envoy's Fingerless Gloves of Maiming",
             legs: "Augmented Lunar Envoy's Trousers of Maiming",
             feet: "Abyssos Sollerets of Maiming",
-            earring: "Augmented Lunar Envoy's Earring of Slaying",
+            earrings: "Augmented Lunar Envoy's Earring of Slaying",
             necklace: "Augmented Lunar Envoy's Necklace of Slaying",
-            bracelet: "Abyssos Amulet of Slaying",
+            bracelets: "Abyssos Amulet of Slaying",
             ring1: "Augmented Lunar Envoy's Ring of Slaying",
             ring2: "Abyssos Ring of Slaying",
             url: null
@@ -499,9 +500,9 @@ async function createGearsets() {
             hands: "Augmented Lunar Envoy's Gloves of Healing",
             legs: "Augmented Lunar Envoy's Longkilt of Healing",
             feet: "Abyssos Boots of Healing",
-            earring: "Abyssos Earrings of Healing",
+            earrings: "Abyssos Earrings of Healing",
             necklace: "Augmented Lunar Envoy's Necklace of Healing",
-            bracelet: "Augmented Lunar Envoy's Bracelets of Healing",
+            bracelets: "Augmented Lunar Envoy's Bracelets of Healing",
             ring1: "Abyssos Ring of Healing",
             ring2: "Rinascita Ring of Healing",
             url: null
@@ -537,14 +538,15 @@ async function createTestUsers() {
 }
 
 async function createTestPlayers() {
-    await createPlayer("lime grove", "malboro", 6);
-    await createPlayer("top text", "malboro", 12);
-    await createPlayer("gurr aarg", "malboro", 16);
-    await createPlayer("rawr wars", "malboro", 9);
-    await createPlayer("ambrosia eternum", "malboro", 10);
-    await createPlayer("genevieve frenbl", "malboro", 18);
-    await createPlayer("aava sihn", "malboro", 8);
-    await createPlayer("ratboy rights", "malboro", 17);
+    await createPlayer("lime grove", "malboro", 6, 'whm');
+    await createPlayer("top text", "malboro", 12, 'drk');
+    await createPlayer("gurr aarg", "malboro", 16, 'gnb');
+    await createPlayer("rawr wars", "malboro", 9, 'sch');
+    await createPlayer("ambrosia eternum", "malboro", 10, 'nin');
+    // await createPlayer("genevieve frenbl", "malboro", 18, 'rpr');
+    await createPlayer("midora aurora", "malboro", 4, 'drg');
+    await createPlayer("aava sihn", "malboro", 8, 'smn');
+    await createPlayer("ratboy rights", "malboro", 17, 'dnc');
 }
 
 async function createTestStatic() {

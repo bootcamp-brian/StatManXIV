@@ -39,6 +39,12 @@ async function getStaticByName(name) {
     }
 }
 
+async function attachPlayersToStatic(static) {
+    const players = await getPlayersByStatic(static.id);
+    static.players = players;
+    return static;
+}
+
 // gets static by id
 async function getStaticById(staticId) {
     try {
@@ -48,9 +54,24 @@ async function getStaticById(staticId) {
             WHERE id=$1;
         `, [staticId]);
 
-        const players = await getPlayersByStatic(static.id);
-        static.players = players;
-        return static;
+        const staticWithPlayers = await attachPlayersToStatic(static);
+        return staticWithPlayers;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+// gets a user's statics
+async function getUserStatics(userId) {
+    try {
+        const { rows } = await client.query(`
+            SELECT *
+            FROM statics
+            WHERE "userId"=$1;
+        `, [userId]);
+
+        const statics = await Promise.all(rows.map(attachPlayersToStatic))
+        return statics;
     } catch (error) {
         console.error(error);
     }
@@ -76,5 +97,6 @@ module.exports = {
     createStatic,
     getStaticById,
     getStaticByName,
-    deleteStatic
+    deleteStatic,
+    getUserStatics
 }

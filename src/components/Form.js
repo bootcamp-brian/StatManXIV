@@ -1,6 +1,6 @@
 import { Box } from "@mui/system"
 import { TextField, Button } from "@mui/material"
-import { getCharacterProxy } from "./proxy";
+import { getCharacterProxy } from "../proxy";
 
 function Form() {
     const handleSubmit = async (event) => {

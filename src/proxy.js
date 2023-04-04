@@ -11,3 +11,67 @@ export const getCharacterProxy = async (name, server) => {
     const data = await response.json();
     return data;
 }
+
+export const getStatic = async (name) => {
+    const response = await fetch(`${BASE_URL}/statics/${name}/`, {
+        method: "GET",
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+
+    const data = await response.json();
+    return data;
+}
+
+export const syncPlayer = async (playerId) => {
+    const response = await fetch(`${BASE_URL}/players/`, {
+        method: "PATCH",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ playerId })
+    });
+
+    const data = await response.json();
+    return data;
+}
+
+export const syncAllPlayers = async (players) => {
+    const response = await fetch(`${BASE_URL}/players/static`, {
+        method: "PATCH",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ players })
+    });
+
+    const data = await response.json();
+    return data;
+}
+
+export const loginUser = async (username, password) => {
+    const response = await fetch(`${BASE_URL}/users/login`, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, password })
+    });
+
+    const data = await response.json();
+    return data;
+}
+
+export const getStatics = async (token) => {
+    const response = await fetch(`${BASE_URL}/users/statics/`, {
+        method: "GET",
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        }
+    });
+
+    const data = await response.json();
+    return data;
+}
