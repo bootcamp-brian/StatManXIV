@@ -6,7 +6,6 @@ async function createPlayer(character, server, gearsetId, job) {
         const { rows: [player] } = await client.query(`
             INSERT INTO players(character, server, "gearsetId", job)
             VALUES ($1, $2, $3, $4)
-            ON CONFLICT (character) DO NOTHING
             RETURNING *;
         `, [character, server, gearsetId, job]);
 
@@ -111,9 +110,7 @@ async function getPlayersByStatic(staticId) {
             WHERE static_players."staticId"=$1;
         `, [staticId]);
 
-        console.log(rows);
-        const playersWithBIS = await Promise.all(rows.map(attachGearsetToPlayer))
-        console.log(playersWithBIS)
+        const playersWithBIS = await Promise.all(rows.map(attachGearsetToPlayer));
         return playersWithBIS;
     } catch (error) {
         console.error(error);

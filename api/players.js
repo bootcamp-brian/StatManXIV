@@ -1,7 +1,7 @@
 const express = require("express");
-const { getPlayerByCharacter, getGearsetById, updatePlayer, getPlayersByStatic, getPlayerById } = require("../db");
+const { getPlayerByCharacter, getGearsetById, updatePlayer, getPlayersByStatic, getPlayerById, createPlayer, addPlayerToStatic, deleteStaticPlayer, getStaticById } = require("../db");
 const playersRouter = express.Router();
-const { getCharacterId, getCharacterInfo, getGearName } = require('./utils');
+const { getCharacterId, getCharacterInfo, getGearName, checkAuthorization } = require('./utils');
 
 // GET /api/players/:staticId
 // Gets players in a static
@@ -40,6 +40,41 @@ playersRouter.get('/:staticId', async (req, res, next) => {
 //     }
 // });
 
+// POST /api/players/
+// creates a new player and adds them to the provided static
+playersRouter.post('/', checkAuthorization, async (req, res, next) => {
+    try {
+        const { id: userId } = req.user;
+        const { character, server, gearsetId, job, staticId } = req.body;
+        const characterId = await getCharacterId(character, server);
+        if (characterId) {
+            const checkStatic = await getStaticById(staticId);
+            if (checkStatic) {
+                const player = await createPlayer(character, server, gearsetId, job);
+                await addPlayerToStatic(player.id, staticId);
+        
+                res.send({message: 'success'})
+            } else {
+                res.status(404);
+                next({
+                    error: '404',
+                    name: 'StaticNotFound',
+                    message: `Static not found`
+                })
+            }
+        } else {
+            res.status(404);
+            next({
+                error: '404',
+                name: 'CharacterNotFound',
+                message: `${character} was not found on ${server}`
+            })
+        }
+    } catch ({ error, name, message }) {
+        next({ error, name, message });
+    }
+});
+
 // PATCH /api/players/
 // updates a player info based on id passed in body
 playersRouter.patch('/', async (req, res, next) => {
@@ -73,8 +108,8 @@ playersRouter.patch('/', async (req, res, next) => {
         } else {
             res.send({message: "Player's currently equipped job does not match their static job."})
         }
-    } catch (error) {
-        next(error);
+    } catch ({ error, name, message }) {
+        next({ error, name, message });
     }
 });
 
@@ -115,8 +150,34 @@ playersRouter.patch('/static', async (req, res, next) => {
         }
 
         res.send({ message: 'sucess' })
-    } catch (error) {
-        next(error);
+    } catch ({ error, name, message }) {
+        next({ error, name, message });
+    }
+});
+
+// DELETE /api/players/
+// Removes a player from a static based on id passed in body
+playersRouter.delete('/static', checkAuthorization, async (req, res, next) => {
+    try {
+        const { playerId, staticId } = req.body;
+        const { id: userId } = req.user;
+
+        const static = await getStaticById(staticId);
+        if (static.userId === userId) {
+            const response = await deleteStaticPlayer(playerId, staticId);
+            
+            res.send({ response })
+        } else {
+            res.status(401);
+            next({
+                error: '401',
+                name: 'UnauthorizedStaticError',
+                message: 'You did not create that static.'
+            })
+        }
+
+    } catch ({ error, name, message }) {
+        next({ error, name, message });
     }
 });
 

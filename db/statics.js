@@ -31,9 +31,13 @@ async function getStaticByName(name) {
             WHERE name=$1;
         `, [name]);
         
-        const players = await getPlayersByStatic(static.id);
-        static.players = players;
-        return static;
+        if (static) {
+            const players = await getPlayersByStatic(static.id);
+            static.players = players;
+            return static;
+        } else {
+            return false;
+        }
     } catch (error) {
         console.error(error);
     }
@@ -54,8 +58,12 @@ async function getStaticById(staticId) {
             WHERE id=$1;
         `, [staticId]);
 
-        const staticWithPlayers = await attachPlayersToStatic(static);
-        return staticWithPlayers;
+        if (static) {
+            const staticWithPlayers = await attachPlayersToStatic(static);
+            return staticWithPlayers;
+        } else {
+            return false;
+        }
     } catch (error) {
         console.error(error);
     }

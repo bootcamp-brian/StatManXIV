@@ -9,22 +9,6 @@ async function createStaticPlayer(staticId) {
             RETURNING *;
         `, [staticId]);
 
-        console.log(static_player)
-        return static_player;
-    } catch (error) {
-        console.error(error);
-    }
-}
-
-// gets static_player by id
-async function getStaticPlayerById(staticPlayerId) {
-    try {
-        const { rows: [static_player] } = await client.query(`
-            SELECT *
-            FROM static_players
-            WHERE character=$1;
-        `, [staticPlayerId]);
-
         return static_player;
     } catch (error) {
         console.error(error);
@@ -60,14 +44,14 @@ async function addPlayerToStatic(playerId, staticId) {
     }
 }
 
-// deletes static_player by id
-async function deleteStaticPlayer(staticPlayerId) {
+// deletes a player from static baseid on playerId and staticId
+async function deleteStaticPlayer(playerId, staticId) {
     try {
         const { rows: [static_player] } = await client.query(`
             DELETE FROM static_players
-            WHERE id=$1
+            WHERE "playerId"=$1 AND "staticId"=$2
             RETURNING *;
-        `, [staticPlayerId]);
+        `, [playerId, staticId]);
 
         return static_player;
     } catch (error) {
@@ -75,10 +59,24 @@ async function deleteStaticPlayer(staticPlayerId) {
     }
 }
 
+// deletes static_player by id
+// async function deleteStaticPlayer(staticPlayerId) {
+//     try {
+//         const { rows: [static_player] } = await client.query(`
+//             DELETE FROM static_players
+//             WHERE id=$1
+//             RETURNING *;
+//         `, [staticPlayerId]);
+
+//         return static_player;
+//     } catch (error) {
+//         console.error(error);
+//     }
+// }
+
 
 module.exports = {
     createStaticPlayer,
-    getStaticPlayerById,
     deleteStaticPlayer,
     addPlayerToStatic
 }

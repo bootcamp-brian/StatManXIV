@@ -70,7 +70,6 @@ usersRouter.post('/login', async (req, res, next) => {
 
     try {
         const user = await verifyUser(username, password);
-        console.log(user)
         
         if (!user) {
             res.status(400);

@@ -64,12 +64,66 @@ export const loginUser = async (username, password) => {
 }
 
 export const getStatics = async (token) => {
-    const response = await fetch(`${BASE_URL}/users/statics/`, {
+    const response = await fetch(`${BASE_URL}/users/statics`, {
         method: "GET",
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`
         }
+    });
+
+    const data = await response.json();
+    return data;
+}
+
+export const getGearsets = async () => {
+    const response = await fetch(`${BASE_URL}/gearsets`, {
+        method: "GET",
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+
+    const data = await response.json();
+    return data;
+}
+
+export const addNewMember = async ({ character, server, gearsetId, job, staticId, token }) => {
+    const response = await fetch(`${BASE_URL}/players`, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ character, server, gearsetId, job, staticId })
+    });
+
+    const data = await response.json();
+    return data;
+}
+
+export const deleteStaticMember = async (playerId, staticId, token) => {
+    const response = await fetch(`${BASE_URL}/players/static`, {
+        method: "DELETE",
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ playerId, staticId })
+    });
+
+    const data = await response.json();
+    return data;
+}
+
+export const createNewStatic = async (name, token) => {
+    const response = await fetch(`${BASE_URL}/statics`, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ name })
     });
 
     const data = await response.json();

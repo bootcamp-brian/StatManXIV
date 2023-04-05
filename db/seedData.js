@@ -74,7 +74,7 @@ async function createTables() {
         await client.query(`
             CREATE TABLE players (
                 id SERIAL PRIMARY KEY,
-                character VARCHAR(255) UNIQUE NOT NULL,
+                character VARCHAR(255) NOT NULL,
                 job VARCHAR(255) NOT NULL,
                 server VARCHAR(255) NOT NULL,
                 "gearsetId" INTEGER REFERENCES gearsets(id) NOT NULL,

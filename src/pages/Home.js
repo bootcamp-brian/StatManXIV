@@ -14,7 +14,6 @@ const Home = () => {
     }
   
     useEffect(() => {
-      console.log(statics.length)
       renderStatics();
     }, [])
 
