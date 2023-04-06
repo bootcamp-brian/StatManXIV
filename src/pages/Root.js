@@ -1,10 +1,11 @@
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
-import { Button, Container, Modal, ThemeProvider, createTheme } from '@mui/material';
+import { Box, Button, Container, Modal, ThemeProvider, createTheme } from '@mui/material';
 import ButtonAppBar from '../components/AppBar';
 import Spreadsheet from "../components/Spreadsheet";
 import { useState, useEffect } from "react";
-import { getStatics } from "../proxy";
+import { getGearSlotList, getStatics } from "../proxy";
 import CreateStaticForm from "../components/CreateStaticForm";
+import CreateGearsetForm from "../components/CreateGearsetForm";
 
 export default function Root() {
     const [token, setToken] = useState(localStorage.getItem('token'));
@@ -18,6 +19,10 @@ export default function Root() {
         }
     }
   
+    const testFunction = async () => {
+        const response = await getGearSlotList('MainHand')
+        console.log(response)
+    }
     useEffect(() => {
       renderStatics();
     }, [])
@@ -28,7 +33,10 @@ export default function Root() {
             {
                 token &&
                 <Container sx={{ marginY: 5, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                    <CreateStaticForm token={token} renderStatics={renderStatics} />
+                    <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-around' }}>
+                        <CreateStaticForm token={token} renderStatics={renderStatics} />
+                        <CreateGearsetForm token={token} renderStatics={renderStatics} />
+                    </Box>
                     {
                         statics && statics.length > 0 &&
                         statics.map(staticInfo => {

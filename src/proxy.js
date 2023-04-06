@@ -129,3 +129,16 @@ export const createNewStatic = async (name, token) => {
     const data = await response.json();
     return data;
 }
+
+export const getGearSlotList = async (gearSlot) => {
+    console.log(gearSlot)
+    const response = await fetch(`${BASE_URL}/gearsets/list/${gearSlot}`, {
+        method: "GET",
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+
+    const data = await response.json();
+    return data;
+}

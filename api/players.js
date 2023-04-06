@@ -94,10 +94,10 @@ playersRouter.patch('/', async (req, res, next) => {
             for (let key in Gear) {
                 const gearId = Gear[key].ID;
                 const gearPiece = await getGearName(gearId);
-                if (gearPiece === bisGear[key.toLowerCase()]) {
+                if (gearPiece.toLowerCase() === bisGear[key.toLowerCase()].toLowerCase()) {
                     gearUpdates[key.toLowerCase()] = true;
                 } else if (key.toLowerCase() === 'ring1' || key.toLowerCase() === 'ring2') {
-                    if (gearPiece === bisGear.ring1 || gearPiece === bisGear.ring2) {
+                    if (gearPiece.toLowerCase() === bisGear.ring1.toLowerCase() || gearPiece.toLowerCase() === bisGear.ring2.toLowerCase()) {
                         gearUpdates[key.toLowerCase()] = true;
                     }
                 }
@@ -114,7 +114,7 @@ playersRouter.patch('/', async (req, res, next) => {
 });
 
 // PATCH /api/players/static
-// updates a player info based on id passed in body
+// updates the player info for all the members of a static
 playersRouter.patch('/static', async (req, res, next) => {
     try {
         const { players } = req.body;
@@ -136,10 +136,10 @@ playersRouter.patch('/static', async (req, res, next) => {
                 for (let key in Gear) {
                     const gearId = Gear[key].ID;
                     const gearPiece = await getGearName(gearId);
-                    if (gearPiece === bisGear[key.toLowerCase()]) {
+                    if (gearPiece.toLowerCase() === bisGear[key.toLowerCase()].toLowerCase()) {
                         gearUpdates[key.toLowerCase()] = true;
                     } else if (key.toLowerCase() === 'ring1' || key.toLowerCase() === 'ring2') {
-                        if (gearPiece === bisGear.ring1 || gearPiece === bisGear.ring2) {
+                        if (gearPiece.toLowerCase() === bisGear.ring1.toLowerCase() || gearPiece.toLowerCase() === bisGear.ring2.toLowerCase()) {
                             gearUpdates[key.toLowerCase()] = true;
                         }
                     }

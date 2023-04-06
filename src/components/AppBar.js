@@ -50,7 +50,7 @@ export default function ButtonAppBar({ token, setToken, setStatics }) {
 
   return (
     <Box sx={{ flexGrow: 1, minWidth: '980px' }}>
-      <AppBar position="static">
+      <AppBar position="static" color="secondary">
         <Toolbar sx={{ paddingTop: 1, paddingBottom: 1, display: 'flex', justifyContent: 'right' }}>
             {
                 !token ?
@@ -80,7 +80,6 @@ export default function ButtonAppBar({ token, setToken, setStatics }) {
                     />
                     <LoadingButton
                         type="submit"
-                        color="secondary"
                         fullWidth
                         variant="contained"
                         loading={loading}
@@ -91,7 +90,6 @@ export default function ButtonAppBar({ token, setToken, setStatics }) {
                 :
                 <LoadingButton
                     type="button"
-                    color="secondary"
                     variant="contained"
                     loading={loading}
                     onClick={logout}

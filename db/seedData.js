@@ -270,7 +270,7 @@ async function createGearsets() {
             necklace: "Augmented Lunar Envoy's Necklace of Healing",
             bracelets: "Augmented Lunar Envoy's Bracelets of Healing",
             ring1: "Abyssos Ring of Healing",
-            ring2: "Rinascita Ring of Healing",
+            ring2: "Augmented Rinascita Ring of Healing",
             url: null
         }
         const blm = {
@@ -324,7 +324,7 @@ async function createGearsets() {
             necklace: "Augmented Lunar Envoy's Necklace of Healing",
             bracelets: "Augmented Lunar Envoy's Bracelets of Healing",
             ring1: "Abyssos Ring of Healing",
-            ring2: "Rinascita Ring of Healing",
+            ring2: "Augmented Rinascita Ring of Healing",
             url: null
         }
         const nin = {
@@ -396,7 +396,7 @@ async function createGearsets() {
             necklace: "Augmented Lunar Envoy's Necklace of Healing",
             bracelets: "Augmented Lunar Envoy's Bracelets of Healing",
             ring1: "Abyssos Ring of Healing",
-            ring2: "Rinascita Ring of Healing",
+            ring2: "Augmented Rinascita Ring of Healing",
             url: null
         }
         const sam = {
@@ -504,7 +504,7 @@ async function createGearsets() {
             necklace: "Augmented Lunar Envoy's Necklace of Healing",
             bracelets: "Augmented Lunar Envoy's Bracelets of Healing",
             ring1: "Abyssos Ring of Healing",
-            ring2: "Rinascita Ring of Healing",
+            ring2: "Augmented Rinascita Ring of Healing",
             url: null
         }
 
