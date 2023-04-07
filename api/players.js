@@ -92,25 +92,35 @@ playersRouter.patch('/toggleGear', async (req, res, next) => {
 playersRouter.patch('/info', async (req, res, next) => {
     try {
         const { playerId, job, gearsetId } = req.body;
-        const infoToUpdate = {
-            job,
-            gearsetId,
-            mainhand: false,
-            offhand: false,
-            head: false,
-            body: false,
-            hands: false,
-            legs: false,
-            feet: false,
-            earrings: false,
-            necklace: false,
-            bracelets: false,
-            ring1: false,
-            ring2: false,
+        const gearset = await getGearsetById(gearsetId);
+        if (gearset.id === gearsetId) {
+            res.status(400);
+            next({
+                error: 400,
+                name: 'SameGearsetError',
+                message: 'That player is already assigned this gearset.'
+            })
+        } else {
+            const infoToUpdate = {
+                job,
+                gearsetId,
+                mainhand: false,
+                offhand: false,
+                head: false,
+                body: false,
+                hands: false,
+                legs: false,
+                feet: false,
+                earrings: false,
+                necklace: false,
+                bracelets: false,
+                ring1: false,
+                ring2: false,
+            }
+    
+            const updatedPlayer = await updatePlayer(playerId, infoToUpdate)
+            res.send(updatedPlayer)
         }
-
-        const updatedPlayer = await updatePlayer(playerId, infoToUpdate)
-        res.send(updatedPlayer)
     } catch ({ error, name, message }) {
         next({ error, name, message });
     }
