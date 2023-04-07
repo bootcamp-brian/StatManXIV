@@ -58,6 +58,7 @@ function CreateStaticForm({ token, renderStatics }) {
         <>
             <Button
                 variant="contained"
+                size="large"
                 sx={{
                     mt: 2,
                     width : '30%',

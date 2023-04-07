@@ -64,7 +64,7 @@ const Spreadsheet = ({ staticInfo, renderStatics, token }) => {
           flexDirection: 'column',
           alignItems: 'center'
         }}
-        elevation={12}
+        elevation={24}
       >
         <Typography variant='h2' component="h2" mb={2}>{staticInfo.name}</Typography>
         {

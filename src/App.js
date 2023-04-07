@@ -2,6 +2,7 @@ import {
     createBrowserRouter,
     RouterProvider,
 } from "react-router-dom";
+import './App.css'
 import NotFound from "./NotFound";
 import Root from "./pages/Root";
   
