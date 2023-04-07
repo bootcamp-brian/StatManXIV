@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "seed:dev": "nodemon ./db/seed.js",
+    "seed": "node ./db/seed.js",
     "server:dev": "nodemon server.js",
+    "server": "node server.js",
     "start": "react-scripts start",
     "build": "react-scripts build"
   },
