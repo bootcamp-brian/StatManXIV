@@ -7,7 +7,6 @@ async function createStatic(name, userId) {
         const { rows: [static] } = await client.query(`
             INSERT INTO statics(name, "userId")
             VALUES ($1, $2)
-            ON CONFLICT (name) DO NOTHING
             RETURNING *;
         `, [name, userId]);
 
