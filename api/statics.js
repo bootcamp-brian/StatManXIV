@@ -22,20 +22,9 @@ staticsRouter.post('/', checkAuthorization, async (req, res, next) => {
     try {
         const { name } = req.body;
         const { id: userId } = req.user;
-
-        const staticExists = await getStaticByName(name);
         
-        if (!staticExists) {
-            const newStatic = await createStatic(name, userId);
-            res.send(newStatic)
-        } else {
-            res.status(403);
-            next({
-                error: '403',
-                name: 'StaticNameTakenError',
-                message: `${name} is already being tracked.`
-            });
-        }
+        const newStatic = await createStatic(name, userId);
+        res.send(newStatic)
     } catch ({ error, name, message }) {
         next({ error, name, message });
     } 
