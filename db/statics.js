@@ -1,5 +1,5 @@
 const client = require("./client");
-const { getPlayersByStatic } = require("./players");
+const { getPlayersByStatic, deletePlayer } = require("./players");
 
 // creates a new static
 async function createStatic(name, userId) {
@@ -87,13 +87,20 @@ async function getUserStatics(userId) {
 // deletes static by id
 async function deleteStatic(staticId) {
     try {
-        const { rows: [static] } = await client.query(`
+        const staticToDelete = await getStaticById(staticId);
+        const { players } = staticToDelete;
+
+        for (let player of players) {
+            await deletePlayer(player.id);
+        }
+
+        const { rows: [deletedStatic] } = await client.query(`
             DELETE FROM statics
             WHERE id=$1
             RETURNING *;
         `, [staticId]);
 
-        return static;
+        return deletedStatic;
     } catch (error) {
         console.error(error);
     }

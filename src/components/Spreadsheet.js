@@ -27,6 +27,7 @@ const Spreadsheet = ({ staticInfo, renderStatics, token }) => {
     border: '1px solid black',
     textAlign: 'center',
     backgroundColor: '#a7acac' };
+    
   const cellStyle = (cellValue) => {
     return {
       textAlign: 'center',

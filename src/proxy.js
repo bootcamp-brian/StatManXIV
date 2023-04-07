@@ -148,6 +148,20 @@ export const createNewStatic = async (name, token) => {
     return data;
 }
 
+export const deleteStatic = async (staticId, token) => {
+    const response = await fetch(`${BASE_URL}/statics`, {
+        method: "DELETE",
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ staticId })
+    });
+
+    const data = await response.json();
+    return data;
+}
+
 // Gearsets API functions
 export const getGearsets = async () => {
     const response = await fetch(`${BASE_URL}/gearsets`, {
