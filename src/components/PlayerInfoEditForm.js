@@ -1,6 +1,6 @@
 import { Box } from "@mui/system"
 import { Button, Typography, Modal, FormControl, InputLabel, Select, MenuItem } from "@mui/material"
-import { editPlayerInfo, getGearsets } from "../proxy";
+import { editPlayerInfo, getGearsets } from "../APIutils";
 import { useState } from "react";
 import { LoadingButton } from "@mui/lab";
 

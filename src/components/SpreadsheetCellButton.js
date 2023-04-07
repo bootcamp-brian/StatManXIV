@@ -1,5 +1,5 @@
 import { Button, Tooltip } from "@mui/material";
-import { manualToggleGearValue } from "../proxy";
+import { manualToggleGearValue } from "../APIutils";
 
 export default function SpreadsheetCellButton({ player, bisGear, gearSlot, renderStatics }) {
     const handleToggle = async (playerId, gearSlot, currentValue) => {

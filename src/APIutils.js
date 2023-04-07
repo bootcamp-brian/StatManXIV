@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:3001/api';
+const BASE_URL = 'https://statmanxiv.onrender.com//api';
 
 // Users API functions
 export const loginUser = async (username, password) => {

@@ -1,6 +1,6 @@
 import { Box } from "@mui/system"
 import { TextField, Button, Typography, Modal, FormControl, InputLabel, Select, MenuItem } from "@mui/material"
-import { createNewGearset } from "../proxy";
+import { createNewGearset } from "../APIutils";
 import { useState } from "react";
 import { LoadingButton } from "@mui/lab";
 import GearSlotSelectField from "./GearSlotSelectField";

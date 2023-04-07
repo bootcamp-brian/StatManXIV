@@ -3,7 +3,7 @@ import { Box, Button, Container, Modal, ThemeProvider, createTheme } from '@mui/
 import ButtonAppBar from '../components/AppBar';
 import Spreadsheet from "../components/Spreadsheet";
 import { useState, useEffect } from "react";
-import { getGearSlotList, getStatics } from "../proxy";
+import { getGearSlotList, getStatics } from "../APIutils";
 import CreateStaticForm from "../components/CreateStaticForm";
 import CreateGearsetForm from "../components/CreateGearsetForm";
 

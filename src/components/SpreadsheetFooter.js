@@ -2,7 +2,7 @@ import { LoadingButton } from "@mui/lab";
 import { Box, Button, Modal, Typography } from "@mui/material";
 import AddMemberForm from "./AddMemberForm";
 import { useState } from "react";
-import { deleteStatic, syncAllPlayers } from "../proxy";
+import { deleteStatic, syncAllPlayers } from "../APIutils";
 
 export default function SpreadsheetFooter({ staticInfo, renderStatics, token, loading, setLoading }) {
     const [open, setOpen] = useState(false);

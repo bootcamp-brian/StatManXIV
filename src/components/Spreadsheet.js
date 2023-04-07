@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Tooltip, Typography, Box, Button } from '@mui/material';
-import { deleteStaticMember, manualToggleGearValue } from '../proxy';
+import { deleteStaticMember, manualToggleGearValue } from '../APIutils';
 import { LoadingButton } from '@mui/lab';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import SpreadsheetFooter from './SpreadsheetFooter';
@@ -27,7 +27,7 @@ const Spreadsheet = ({ staticInfo, renderStatics, token }) => {
     border: '1px solid black',
     textAlign: 'center',
     backgroundColor: '#a7acac' };
-    
+
   const cellStyle = (cellValue) => {
     return {
       textAlign: 'center',

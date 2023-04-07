@@ -1,6 +1,6 @@
 import { Box } from "@mui/system"
 import { TextField, Button, Typography, Modal } from "@mui/material"
-import { createNewStatic } from "../proxy";
+import { createNewStatic } from "../APIutils";
 import { useState } from "react";
 import { LoadingButton } from "@mui/lab";
 

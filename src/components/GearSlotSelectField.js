@@ -1,6 +1,6 @@
 import { Autocomplete, FormControl, TextField} from "@mui/material"
 import { useEffect, useState } from "react";
-import { getGearSlotList } from "../proxy";
+import { getGearSlotList } from "../APIutils";
 
 export default function GearSlotSelectField({ gearSlot, setFunction, job }) {
     const [currentGearSlotOptions, setCurrentGearSlotOptions] = useState([]);

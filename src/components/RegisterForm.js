@@ -1,7 +1,7 @@
 import { LoadingButton } from "@mui/lab";
 import { Box, Button, Modal, TextField, Typography } from "@mui/material";
 import { useState } from "react";
-import { registerUser } from "../proxy";
+import { registerUser } from "../APIutils";
 
 export default function RegisterForm({ setToken }) {
     const [open, setOpen] = useState(false);

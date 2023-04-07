@@ -1,7 +1,7 @@
 import { Box } from "@mui/system"
 import { TextField, FormControl, InputLabel, Select, MenuItem, Typography } from "@mui/material"
 import { useState } from "react";
-import { addNewMember, getGearsets } from "../proxy";
+import { addNewMember, getGearsets } from "../APIutils";
 import { LoadingButton } from "@mui/lab";
 
 function AddMemberForm({ staticInfo, renderStatics, handleClose, token }) {

@@ -1,7 +1,7 @@
 import { LoadingButton } from "@mui/lab";
 import { Box, Button, Modal, TextField, Typography } from "@mui/material";
 import { useState } from "react";
-import { loginUser } from "../proxy";
+import { loginUser } from "../APIutils";
 
 export default function LoginForm({ setToken }) {
     const [open, setOpen] = useState(false);
