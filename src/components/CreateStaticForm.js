@@ -1,6 +1,6 @@
 import { Box } from "@mui/system"
 import { TextField, Button, Typography, Modal } from "@mui/material"
-import { createNewStatic, getCharacterProxy } from "../proxy";
+import { createNewStatic } from "../proxy";
 import { useState } from "react";
 import { LoadingButton } from "@mui/lab";
 
@@ -28,6 +28,8 @@ function CreateStaticForm({ token, renderStatics }) {
     const handleSubmit = async (event) => {
         event.preventDefault();
         setLoading(true);
+        setErrorMessage('');
+        setNameError(false);
         const data = new FormData(event.currentTarget);
         const name = data.get('name');
 
@@ -76,7 +78,7 @@ function CreateStaticForm({ token, renderStatics }) {
             >
                 <Box sx={style}>
                     <Typography id="modal-create-static-form" variant="h6" component="h2" sx={{ textAlign: 'center' }}>
-                        CreateStatic
+                        Create Static
                     </Typography>
                     <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                         {

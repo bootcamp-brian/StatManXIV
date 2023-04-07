@@ -2,29 +2,30 @@ import { Autocomplete, FormControl, TextField} from "@mui/material"
 import { useEffect, useState } from "react";
 import { getGearSlotList } from "../proxy";
 
-export default function GearSlotSelectField({ gearSlot}) {
-    const [currentGearSlot, setCurrentGearSlot] = useState('');
+export default function GearSlotSelectField({ gearSlot, setFunction, job }) {
     const [currentGearSlotOptions, setCurrentGearSlotOptions] = useState([]);
     const lowerJoinedGearSlot = gearSlot.replace(' ', '').toLowerCase();
         
     const handleGearSlotSelect = async (event, newValue) => {
-        setCurrentGearSlot(newValue);
+        setFunction(newValue);
     };
 
     useEffect(() => {
         const getOptions = async () => {
-            const options = await getGearSlotList(gearSlot.replace(' ', ''));
-            console.log(options)
-            const optionNames = options.gearSlotList.map(option => option.Name);
-            setCurrentGearSlotOptions(optionNames);
+            if (job) {
+                const options = await getGearSlotList(gearSlot.replace(' ', ''), job);
+                const optionNames = options.gearSlotList.map(option => option.Name);
+                setCurrentGearSlotOptions(optionNames);
+            }
         }
         getOptions();
-    }, []);
+    }, [job]);
 
     return (
         <FormControl
             margin="normal"
             required
+            error={true}
             sx={{
                 width: '50%',
                 display: 'flex',
@@ -32,6 +33,7 @@ export default function GearSlotSelectField({ gearSlot}) {
             }}
         >
             <Autocomplete
+                disabled={job !== 'pld' && gearSlot === 'Off Hand' ? true : false}
                 disablePortal
                 id={`${lowerJoinedGearSlot}-autocomplete`}
                 options={currentGearSlotOptions}

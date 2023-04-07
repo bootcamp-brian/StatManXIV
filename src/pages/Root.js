@@ -18,14 +18,10 @@ export default function Root() {
             setStatics(fetchedStatics.statics);
         }
     }
-  
-    const testFunction = async () => {
-        const response = await getGearSlotList('MainHand')
-        console.log(response)
-    }
+
     useEffect(() => {
       renderStatics();
-    }, [])
+    }, [token])
         
     return <>
         <ButtonAppBar token={token} setToken={setToken} setStatics={setStatics} />
@@ -35,7 +31,7 @@ export default function Root() {
                 <Container sx={{ marginY: 5, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-around' }}>
                         <CreateStaticForm token={token} renderStatics={renderStatics} />
-                        <CreateGearsetForm token={token} renderStatics={renderStatics} />
+                        <CreateGearsetForm token={token} />
                     </Box>
                     {
                         statics && statics.length > 0 &&

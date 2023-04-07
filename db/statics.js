@@ -1,6 +1,5 @@
 const client = require("./client");
 const { getPlayersByStatic } = require("./players");
-const { createStaticPlayer } = require("./static_players");
 
 // creates a new static
 async function createStatic(name, userId) {

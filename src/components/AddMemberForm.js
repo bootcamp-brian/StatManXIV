@@ -1,6 +1,6 @@
 import { Box } from "@mui/system"
-import { TextField, Button, FormControl, InputLabel, Select, MenuItem, Typography } from "@mui/material"
-import { useEffect, useState } from "react";
+import { TextField, FormControl, InputLabel, Select, MenuItem, Typography } from "@mui/material"
+import { useState } from "react";
 import { addNewMember, getGearsets } from "../proxy";
 import { LoadingButton } from "@mui/lab";
 
@@ -60,6 +60,7 @@ function AddMemberForm({ staticInfo, renderStatics, handleClose, token }) {
     const handleSubmit = async (event) => {
         event.preventDefault();
         setLoading(true);
+        setErrorMessage('');
         setCharacterError(false);
         setServerError(false);
         setJobError(false);

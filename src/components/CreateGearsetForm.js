@@ -1,17 +1,28 @@
 import { Box } from "@mui/system"
-import { TextField, Button, Typography, Modal, FormControl, InputLabel, Select, MenuItem, Grid } from "@mui/material"
-import { createNewStatic, getCharacterProxy } from "../proxy";
+import { TextField, Button, Typography, Modal, FormControl, InputLabel, Select, MenuItem } from "@mui/material"
+import { createNewGearset } from "../proxy";
 import { useState } from "react";
 import { LoadingButton } from "@mui/lab";
 import GearSlotSelectField from "./GearSlotSelectField";
 
-function CreateGearsetForm({ token, renderStatics }) {
+function CreateGearsetForm({ token }) {
     const [loading, setLoading] = useState(false);
-    const [nameError, setNameError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [open, setOpen] = useState(false);
     const [job, setJob] = useState('');
-    const [jobError, setError] = useState(false);
+    const [mainhand, setMainhand] = useState('');
+    const [offhand, setOffhand] = useState('');
+    const [head, setHead] = useState('');
+    const [body, setBody] = useState('');
+    const [hands, setHands] = useState('');
+    const [legs, setLegs] = useState('');
+    const [feet, setFeet] = useState('');
+    const [earrings, setEarrings] = useState('');
+    const [necklace, setNecklace] = useState('');
+    const [bracelets, setBracelets] = useState('');
+    const [ring1, setRing1] = useState('');
+    const [ring2, setRing2] = useState('');
+    const [url, setUrl] = useState('');
 
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -55,30 +66,55 @@ function CreateGearsetForm({ token, renderStatics }) {
     };
 
     const handleSubmit = async (event) => {
-        // event.preventDefault();
-        // setLoading(true);
-        // const data = new FormData(event.currentTarget);
-        // const name = data.get('name');
+        event.preventDefault();
+        setLoading(true);
+        setErrorMessage('');
+        const data = new FormData(event.currentTarget);
+        const name = data.get('name');
 
-        
-        // if (!name) {
-        //     setNameError(true);
-        // }
+        const gearsetInfo = {
+            name,
+            job,
+            mainhand,
+            offhand,
+            head,
+            body,
+            hands,
+            legs,
+            feet,
+            earrings,
+            necklace,
+            bracelets,
+            ring1,
+            ring2,
+        }
 
-        // if (name) {
-        //     const response = await createNewStatic(name, token)
-        //     if (response.error) {
-        //         setErrorMessage(response.message);
-        //     } else {
-        //         setErrorMessage('');
-        //         setNameError(false);
-        //         handleClose();
-        //         renderStatics();
-        //     }
-        // } else {
-        //     setErrorMessage('Please fill in all required fields')
-        // }
-        // setLoading(false);
+        const formFields = Object.keys(gearsetInfo);
+
+        let errorExists = false;
+
+        for (let field of formFields) {
+            if (field === 'offhand' && job !== 'pld') {
+                continue;
+            }
+            if (!gearsetInfo[field]) {
+                errorExists = true;
+                setErrorMessage('Please fill in all fields.')
+            } else {
+                setErrorMessage('');
+                handleClose();
+            }
+        }
+
+        gearsetInfo.url = url;
+
+        if (!errorExists) {
+            const response = await createNewGearset(gearsetInfo, token)
+            if (response.error) {
+                setErrorMessage(response.message);
+            }
+        }
+        setLoading(false);
     }
 
     return (
@@ -120,7 +156,6 @@ function CreateGearsetForm({ token, renderStatics }) {
                                 width: '20%',
                                 ml: 1.2
                             }}
-                            error={jobError}
                         >
                             <InputLabel id="job-select-label">Job</InputLabel>
                             <Select
@@ -145,21 +180,20 @@ function CreateGearsetForm({ token, renderStatics }) {
                             id="name"
                             label="Gearset Name"
                             name="name"
-                            error={nameError}
                             autoFocus
                         />
-                            <GearSlotSelectField gearSlot={'Main Hand'} />
-                            <GearSlotSelectField gearSlot={'Off Hand'} />
-                            <GearSlotSelectField gearSlot={'Head'} />
-                            <GearSlotSelectField gearSlot={'Ears'} />
-                            <GearSlotSelectField gearSlot={'Body'} />
-                            <GearSlotSelectField gearSlot={'Neck'} />
-                            <GearSlotSelectField gearSlot={'Gloves'} />
-                            <GearSlotSelectField gearSlot={'Wrists'} />
-                            <GearSlotSelectField gearSlot={'Legs'} />
-                            <GearSlotSelectField gearSlot={'FingerL'} />
-                            <GearSlotSelectField gearSlot={'Feet'} />
-                            <GearSlotSelectField gearSlot={'FingerR'} />
+                            <GearSlotSelectField gearSlot={'Main Hand'} setFunction={setMainhand} job={job} />
+                            <GearSlotSelectField gearSlot={'Off Hand'} setFunction={setOffhand} job={job} />
+                            <GearSlotSelectField gearSlot={'Head'} setFunction={setHead} job={job} />
+                            <GearSlotSelectField gearSlot={'Ears'} setFunction={setEarrings} job={job} />
+                            <GearSlotSelectField gearSlot={'Body'} setFunction={setBody} job={job} />
+                            <GearSlotSelectField gearSlot={'Neck'} setFunction={setNecklace} job={job} />
+                            <GearSlotSelectField gearSlot={'Gloves'} setFunction={setHands} job={job} />
+                            <GearSlotSelectField gearSlot={'Wrists'} setFunction={setBracelets} job={job} />
+                            <GearSlotSelectField gearSlot={'Legs'} setFunction={setLegs} job={job} />
+                            <GearSlotSelectField gearSlot={'FingerL'} setFunction={setRing1} job={job} />
+                            <GearSlotSelectField gearSlot={'Feet'} setFunction={setFeet} job={job} />
+                            <GearSlotSelectField gearSlot={'FingerR'} setFunction={setRing2} job={job} />
                         </Box>
                         <LoadingButton
                             type="submit"

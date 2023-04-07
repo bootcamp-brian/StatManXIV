@@ -1,13 +1,13 @@
 const client = require("./client")
 
 // creates a new player
-async function createPlayer(character, server, gearsetId, job) {
+async function createPlayer(character, server, gearsetId, job, staticId) {
     try {
         const { rows: [player] } = await client.query(`
-            INSERT INTO players(character, server, "gearsetId", job)
-            VALUES ($1, $2, $3, $4)
+            INSERT INTO players(character, server, "gearsetId", job, "staticId")
+            VALUES ($1, $2, $3, $4, $5)
             RETURNING *;
-        `, [character, server, gearsetId, job]);
+        `, [character, server, gearsetId, job, staticId]);
 
         return player;
     } catch (error) {
@@ -105,9 +105,8 @@ async function getPlayersByStatic(staticId) {
     try {
         const { rows } = await client.query(`
             SELECT *
-            FROM static_players
-            JOIN players ON players.id=static_players."playerId"
-            WHERE static_players."staticId"=$1;
+            FROM players
+            WHERE "staticId"=$1;
         `, [staticId]);
 
         const playersWithBIS = await Promise.all(rows.map(attachGearsetToPlayer));

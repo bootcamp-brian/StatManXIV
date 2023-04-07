@@ -35,15 +35,6 @@ usersRouter.post('/register', async (req, res, next) => {
       });
     }
 
-    if (password.length < 8) {
-      res.status(400);
-      next({
-          error: '400',
-          name: 'PasswordTooShortError',
-          message: 'Password too short!'
-      })
-    }
-
     const user = await createUser(username, password);
 
     const token = jwt.sign({ 

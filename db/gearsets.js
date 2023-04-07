@@ -111,6 +111,25 @@ async function getGearsetByJob(job) {
 // }
 
 // gets gearset by id
+async function getGearsetByName(name) {
+    try {
+        const { rows: [gearset] } = await client.query(`
+            SELECT *
+            FROM gearsets
+            WHERE name=$1;
+        `, [name]);
+
+        if (gearset) {
+            return gearset;
+        } else {
+            return false;
+        }
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+// gets gearset by id
 async function getGearsetById(gearsetId) {
     try {
         const { rows: [gearset] } = await client.query(`
@@ -150,5 +169,6 @@ module.exports = {
     getAllGearsets,
     getGearsetById,
     getGearsetByJob,
-    updateGearset
+    updateGearset,
+    getGearsetByName
 }

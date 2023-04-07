@@ -1,5 +1,5 @@
 const express = require("express");
-const { getPlayerByCharacter, getGearsetById, updatePlayer, getPlayersByStatic, getPlayerById, createPlayer, addPlayerToStatic, deleteStaticPlayer, getStaticById } = require("../db");
+const { getPlayerByCharacter, getGearsetById, updatePlayer, getPlayersByStatic, getPlayerById, createPlayer, addPlayerToStatic, deleteStaticPlayer, getStaticById, deletePlayer } = require("../db");
 const playersRouter = express.Router();
 const { getCharacterId, getCharacterInfo, getGearName, checkAuthorization } = require('./utils');
 
@@ -50,10 +50,9 @@ playersRouter.post('/', checkAuthorization, async (req, res, next) => {
         if (characterId) {
             const checkStatic = await getStaticById(staticId);
             if (checkStatic) {
-                const player = await createPlayer(character, server, gearsetId, job);
-                await addPlayerToStatic(player.id, staticId);
+                const player = await createPlayer(character, server, gearsetId, job, staticId);
         
-                res.send({message: 'success'})
+                res.send( player )
             } else {
                 res.status(404);
                 next({
@@ -75,8 +74,93 @@ playersRouter.post('/', checkAuthorization, async (req, res, next) => {
     }
 });
 
+// PATCH /api/players/toggleGear
+// toggles value of a single gearSlot for a player
+playersRouter.patch('/toggleGear', async (req, res, next) => {
+    try {
+        const { playerId, updateGearPieceObj } = req.body;
+
+        const updatedPlayer = await updatePlayer(playerId, updateGearPieceObj)
+        res.send(updatedPlayer)
+    } catch ({ error, name, message }) {
+        next({ error, name, message });
+    }
+});
+
+// PATCH /api/players/info
+// updates the player's job & gearset and resets equipment status
+playersRouter.patch('/info', async (req, res, next) => {
+    try {
+        const { playerId, job, gearsetId } = req.body;
+        const infoToUpdate = {
+            job,
+            gearsetId,
+            mainhand: false,
+            offhand: false,
+            head: false,
+            body: false,
+            hands: false,
+            legs: false,
+            feet: false,
+            earrings: false,
+            necklace: false,
+            bracelets: false,
+            ring1: false,
+            ring2: false,
+        }
+
+        const updatedPlayer = await updatePlayer(playerId, infoToUpdate)
+        res.send(updatedPlayer)
+    } catch ({ error, name, message }) {
+        next({ error, name, message });
+    }
+});
+
+// PATCH /api/players/static
+// updates the player info for all the members of a static
+playersRouter.patch('/static', async (req, res, next) => {
+    try {
+        console.log(req.body)
+        const { players } = req.body;
+
+        for (let staticMember of players) {
+            const player = await getPlayerById(staticMember.id);
+            const { character, server, gearsetId, bisGear } = player;
+            const characterId = await getCharacterId(character, server);
+            if (!characterId) {
+                continue;
+            }
+            const characterInfo = await getCharacterInfo(characterId);
+            const currentGear = characterInfo.GearSet;
+            const { JobID, Gear } = currentGear;
+            if (JobID === bisGear.classId) {
+                delete Gear.SoulCrystal;
+                const gearUpdates = {};
+                
+                for (let key in Gear) {
+                    const gearId = Gear[key].ID;
+                    const gearPiece = await getGearName(gearId);
+                    if (gearPiece.toLowerCase() === bisGear[key.toLowerCase()].toLowerCase()) {
+                        gearUpdates[key.toLowerCase()] = true;
+                    } else if (key.toLowerCase() === 'ring1' || key.toLowerCase() === 'ring2') {
+                        if (gearPiece.toLowerCase() === bisGear.ring1.toLowerCase() || gearPiece.toLowerCase() === bisGear.ring2.toLowerCase()) {
+                            gearUpdates[key.toLowerCase()] = true;
+                        }
+                    }
+                }
+                
+                await updatePlayer(staticMember.id, gearUpdates);
+            }
+        }
+
+        res.send({ message: 'sucess' })
+    } catch ({ error, name, message }) {
+        next({ error, name, message });
+    }
+});
+
 // PATCH /api/players/
-// updates a player info based on id passed in body
+// updates a player's info based on id passed in body
 playersRouter.patch('/', async (req, res, next) => {
     try {
         const { playerId } = req.body;
@@ -113,68 +197,15 @@ playersRouter.patch('/', async (req, res, next) => {
     }
 });
 
-// PATCH /api/players/static
-// updates the player info for all the members of a static
-playersRouter.patch('/static', async (req, res, next) => {
-    try {
-        const { players } = req.body;
-
-        for (let staticMember of players) {
-            const player = await getPlayerById(staticMember.playerId);
-            const { character, server, gearsetId, bisGear } = player;
-            const characterId = await getCharacterId(character, server);
-            if (!characterId) {
-                continue;
-            }
-            const characterInfo = await getCharacterInfo(characterId);
-            const currentGear = characterInfo.GearSet;
-            const { JobID, Gear } = currentGear;
-            if (JobID === bisGear.classId) {
-                delete Gear.SoulCrystal;
-                const gearUpdates = {};
-                
-                for (let key in Gear) {
-                    const gearId = Gear[key].ID;
-                    const gearPiece = await getGearName(gearId);
-                    if (gearPiece.toLowerCase() === bisGear[key.toLowerCase()].toLowerCase()) {
-                        gearUpdates[key.toLowerCase()] = true;
-                    } else if (key.toLowerCase() === 'ring1' || key.toLowerCase() === 'ring2') {
-                        if (gearPiece.toLowerCase() === bisGear.ring1.toLowerCase() || gearPiece.toLowerCase() === bisGear.ring2.toLowerCase()) {
-                            gearUpdates[key.toLowerCase()] = true;
-                        }
-                    }
-                }
-                
-                await updatePlayer(staticMember.playerId, gearUpdates);
-            }
-        }
-
-        res.send({ message: 'sucess' })
-    } catch ({ error, name, message }) {
-        next({ error, name, message });
-    }
-});
-
 // DELETE /api/players/
-// Removes a player from a static based on id passed in body
+// Deletes a player based on id passed in body
 playersRouter.delete('/static', checkAuthorization, async (req, res, next) => {
     try {
-        const { playerId, staticId } = req.body;
-        const { id: userId } = req.user;
+        const { playerId } = req.body;
 
-        const static = await getStaticById(staticId);
-        if (static.userId === userId) {
-            const response = await deleteStaticPlayer(playerId, staticId);
-            
-            res.send({ response })
-        } else {
-            res.status(401);
-            next({
-                error: '401',
-                name: 'UnauthorizedStaticError',
-                message: 'You did not create that static.'
-            })
-        }
+        const response = await deletePlayer(playerId);
+        
+        res.send({ response })
 
     } catch ({ error, name, message }) {
         next({ error, name, message });
