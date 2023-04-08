@@ -17,29 +17,6 @@ playersRouter.get('/:staticId', async (req, res, next) => {
     } 
 })
 
-// playersRouter.get('/:characterName/:server', async (req, res, next) => {
-//     try {
-//         const params = req.params;
-//         console.log(params)
-//         const characterId = await getCharacterId(params.characterName, params.server)
-//         const characterInfo = await getCharacterInfo(characterId);
-//         const gearset = characterInfo.GearSet;
-//         const { ClassID, Gear } = gearset;
-//         delete Gear.SoulCrystal;
-//         const playerGear = {};
-        
-//         for (let key in Gear) {
-//             const gearId = Gear[key].ID;
-//             const gearPiece = await getGearName(gearId);
-//             playerGear[key.toLocaleLowerCase()] = gearPiece;
-//         }
-
-//         res.send({ playerGear });
-//     } catch (error) {
-//         next(error);
-//     }
-// });
-
 // POST /api/players/
 // creates a new player and adds them to the provided static
 playersRouter.post('/', checkAuthorization, async (req, res, next) => {

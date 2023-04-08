@@ -1,9 +1,8 @@
-import { Outlet, useNavigate, useLocation } from "react-router-dom";
-import { Box, Button, Container, Modal, ThemeProvider, createTheme } from '@mui/material';
+import { Box, Container, ThemeProvider, createTheme } from '@mui/material';
 import ButtonAppBar from '../components/AppBar';
 import Spreadsheet from "../components/Spreadsheet";
 import { useState, useEffect } from "react";
-import { getGearSlotList, getStatics } from "../APIutils";
+import { getStatics } from "../APIutils";
 import CreateStaticForm from "../components/CreateStaticForm";
 import CreateGearsetForm from "../components/CreateGearsetForm";
 

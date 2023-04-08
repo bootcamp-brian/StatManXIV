@@ -122,18 +122,6 @@ export const manualToggleGearValue = async (playerId, updateGearPieceObj ) => {
     return data;
 }
 // Statics API functions
-export const getStatic = async (name) => {
-    const response = await fetch(`${BASE_URL}/statics/${name}/`, {
-        method: "GET",
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    });
-
-    const data = await response.json();
-    return data;
-}
-
 export const createNewStatic = async (name, token) => {
     const response = await fetch(`${BASE_URL}/statics`, {
         method: "POST",

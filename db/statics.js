@@ -20,27 +20,6 @@ async function createStatic(name, userId) {
     }
 }
 
-// gets static by name
-async function getStaticByName(name) {
-    try {
-        const { rows: [static] } = await client.query(`
-            SELECT *
-            FROM statics
-            WHERE name=$1;
-        `, [name]);
-        
-        if (static) {
-            const players = await getPlayersByStatic(static.id);
-            static.players = players;
-            return static;
-        } else {
-            return false;
-        }
-    } catch (error) {
-        console.error(error);
-    }
-}
-
 async function attachPlayersToStatic(static) {
     const players = await getPlayersByStatic(static.id);
     static.players = players;
@@ -109,7 +88,6 @@ async function deleteStatic(staticId) {
 module.exports = {
     createStatic,
     getStaticById,
-    getStaticByName,
     deleteStatic,
     getUserStatics
 }
