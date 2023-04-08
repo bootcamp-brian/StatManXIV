@@ -618,7 +618,7 @@ async function createTestPlayers() {
 
 async function rebuildDB() {
     try {
-        // await dropTables()
+        await dropTables()
         await checkTables()
         await createTables()
         await createJobs()
