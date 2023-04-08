@@ -6,9 +6,7 @@ app.use(express.static('public'));
 
 // Setup your Middleware and API Router here
 const cors = require('cors');
-app.use(cors({
-    origin: 'https://statmanxiv.netlify.app/'
-}));
+app.use(cors());
 
 const bodyParser = require('body-parser');
 const client = require("./db/client");
