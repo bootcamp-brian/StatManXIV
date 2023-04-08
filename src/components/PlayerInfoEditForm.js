@@ -86,8 +86,7 @@ export default function PlayerInfoEditForm({ token, playerId, renderStatics, loa
         }
 
         if (job && gearsetId) {
-            const response = await editPlayerInfo(playerId, job, gearsetId, token);
-            console.log(response)
+            await editPlayerInfo(playerId, job, gearsetId, token);
             if (response.error) {
                 setErrorMessage(response.message);
             } else {

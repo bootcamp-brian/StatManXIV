@@ -107,7 +107,6 @@ playersRouter.patch('/info', async (req, res, next) => {
 // updates the player info for all the members of a static
 playersRouter.patch('/static', async (req, res, next) => {
     try {
-        console.log(req.body)
         const { players } = req.body;
 
         for (let staticMember of players) {
