@@ -69,8 +69,8 @@ playersRouter.patch('/toggleGear', async (req, res, next) => {
 playersRouter.patch('/info', async (req, res, next) => {
     try {
         const { playerId, job, gearsetId } = req.body;
-        const gearset = await getGearsetById(gearsetId);
-        if (gearset.id === gearsetId) {
+        const player = await getPlayerById(playerId);
+        if (player.gearsetId === gearsetId) {
             res.status(400);
             next({
                 error: 400,
