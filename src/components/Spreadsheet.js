@@ -171,7 +171,7 @@ const Spreadsheet = ({ staticInfo, renderStatics, token }) => {
             </TableBody>
           </Table>
           :
-          <Typography variant="h4" component="span" sx={{ justifySelf: 'center' }}>{staticInfo.name} doesn't have any memebers yet.</Typography>
+          <Typography variant="h4" component="span" sx={{ justifySelf: 'center' }}>{staticInfo.name} doesn't have any members yet.</Typography>
         }
         <SpreadsheetFooter staticInfo={staticInfo} renderStatics={renderStatics} token={token} loading={loading} setLoading={setLoading} />
       </TableContainer>
