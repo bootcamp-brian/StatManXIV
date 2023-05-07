@@ -43,7 +43,7 @@ export default function LoginForm({ setToken }) {
         }
 
         if (username && password) {
-            const response = await loginUser(username, password)
+            const response = await loginUser(username, password);
             if (response.error) {
                 setErrorMessage(response.message);
             } else {

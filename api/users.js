@@ -69,32 +69,32 @@ usersRouter.post('/login', async (req, res, next) => {
                 name: 'IncorrectCredentialsError',
                 message: 'Incorrect email or password'
             });
-        }
-        
-        const token = jwt.sign({ id: user.id, username }, JWT_SECRET);
-        // const { admin } = user;
-        
-        res.send({ 
-            message: "you're logged in!",
-            token,
-            user 
-        });
+        } else {
+          const token = jwt.sign({ id: user.id, username }, JWT_SECRET);
+          // const { admin } = user;
+          
+          res.send({ 
+              message: "you're logged in!",
+              token,
+              user 
+          });
 
-        // if(admin) {
-        //     const adminToken = jwt.sign({ id: user.id, email }, JWT_SECRET_ADMIN);
-        //     res.send({
-        //         message: "you're logged in!",
-        //         token,
-        //         adminToken,
-        //         user
-        //     });
-        // } else {
-        //     res.send({ 
-        //     message: "you're logged in!",
-        //     token,
-        //     user 
-        //     });
-        // }
+          // if(admin) {
+          //     const adminToken = jwt.sign({ id: user.id, email }, JWT_SECRET_ADMIN);
+          //     res.send({
+          //         message: "you're logged in!",
+          //         token,
+          //         adminToken,
+          //         user
+          //     });
+          // } else {
+          //     res.send({ 
+          //     message: "you're logged in!",
+          //     token,
+          //     user 
+          //     });
+          // }
+        }
         
     } catch ({ error, name, message }) {
       next({ error, name, message });
